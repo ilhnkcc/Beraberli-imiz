@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sevgi Sayacı</title>
+  <style>
+    /* Sayfa stilini belirliyoruz */
+    body {
+      font-family: 'Brush Script MT', cursive; /* El yazısı fontu */
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: #f7e1e1; /* Pastel pembe arka plan */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      text-align: center;
+      animation: backgroundChange 15s infinite alternate; /* Arka plan renk değişim animasyonu */
+    }
+
+    /* Arka plan renginin değişmesi */
+    @keyframes backgroundChange {
+      0% { background-color: #f7e1e1; } /* Açık pembe */
+      50% { background-color: #ffe4e1; } /* Soluk şeftali */
+      100% { background-color: #ffccff; } /* Açık mor */
+    }
+
+    h1 {
+      font-size: 4rem;
+      color: #ff69b4; /* Canlı pembe renk */
+      position: absolute;
+      opacity: 0.7;
+      animation: shake 0.5s infinite alternate; /* "Seni seviyorum!" yazısına titreme efekti */
+    }
+
+    /* Seni seviyorum yazısının titremesi */
+    @keyframes shake {
+      0% { transform: rotate(-3deg); }
+      25% { transform: rotate(3deg); }
+      50% { transform: rotate(-3deg); }
+      75% { transform: rotate(3deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .button {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      margin-top: 20px;
+      animation: pulse 2s infinite; /* Butonun pulse animasyonu */
+    }
+
+    /* Butonun üzerine gelince büyüyüp küçülmesi */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .button:hover {
+      background-color: #e6007b; /* Butonun üzerine gelince renk değişimi */
+    }
+
+    #counter {
+      font-size: 2rem;
+      margin-top: 20px;
+      color: #ff1493;
+      opacity: 0.8;
+      animation: fadeIn 2s ease-in; /* Sayaç animasyonu */
+    }
+
+    /* Sayaç için animasyon */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .date {
+      font-size: 1.2rem;
+      color: #d17dcf;
+    }
+
+    /* Seni seviyorum yazılarının rastgele yerleşmesi */
+    .heart-text {
+      position: absolute;
+      color: #ff1493;
+      font-size: 3rem;
+      user-select: none;
+      opacity: 0.5;
+      animation: heartAnimation 3s ease-in-out infinite; /* Kalp yazılarının animasyonu */
+    }
+
+    /* Kalp yazılarının hareket etmesi */
+    @keyframes heartAnimation {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0.5;
+      }
+      50% {
+        transform: translate(20px, 20px);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(0, 0);
+        opacity: 0.5;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Başlık -->
+  <h1>Seni Seviyorum!</h1>
+
+  <!-- Buton -->
+  <button class="button" onclick="startCounter()">Beraberliğimiz..</button>
+
+  <!-- Sayaç ve tarih -->
+  <div id="counter"></div>
+  <div class="date" id="date"></div>
+
+  <!-- "Seni seviyorum" yazıları çapraz şekilde her yerde -->
+  <script>
+    // 26 Kasım 2024, yani sevgili olduğunuz tarihi tanımlıyoruz
+    const startDate = new Date("2024-11-26");
+    const currentDate = new Date();
+
+    // "Seni seviyorum" yazılarını her yere yerleştirecek fonksiyon
+    function createHeartText() {
+      const heartText = document.createElement('div');
+      heartText.classList.add('heart-text');
+      heartText.innerText = 'Seni Seviyorum!';
+
+      // Rastgele konum ve yön belirliyoruz
+      heartText.style.top = Math.random() * 100 + 'vh';
+      heartText.style.left = Math.random() * 100 + 'vw';
+      heartText.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+      
+      document.body.appendChild(heartText);
+      
+      // 2 saniyede bir yazıyı yok ediyoruz
+      setTimeout(() => heartText.remove(), 5000);
+    }
+
+    // Sayfa yüklendikçe "Seni Seviyorum" yazılarının eklenmesini sağlıyoruz
+    setInterval(createHeartText, 500);
+
+    // Sayaç hesaplama
+    function startCounter() {
+      const timeDiff = currentDate - startDate;
+      const days = Math.floor(timeDiff / (1000 * 3600 * 24)); // Gün hesaplama
+
+      // Sayaç ve tarih güncelleme
+      document.getElementById('counter').innerText = `Bugün ${days} gündür beraberiz!`;
+      document.getElementById('date').innerText = `Başlangıç Tarihi: 26 Kasım 2024`;
+    }
+  </script>
+</body>
+</html>
